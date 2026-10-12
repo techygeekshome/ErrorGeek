@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ErrorGeek</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<header>
+  <div class="brand"><img src="icons/icon32.png" alt="" width="20" height="20"> ErrorGeek</div>
+  <form id="f" autocomplete="off">
+    <input id="q" type="search" spellcheck="false" placeholder="0x80070005, -2147024891, 1603..." aria-label="Error code">
+    <button class="primary" type="submit">Look up</button>
+  </form>
+</header>
+<main>
+  <div id="loading" class="muted">Loading the error list...</div>
+  <section id="out" aria-live="polite"></section>
+  <section id="recentBox" hidden>
+    <div class="rhead"><h2>Recent</h2><button id="clear" class="link" type="button">Clear</button></div>
+    <ul id="recent"></ul>
+  </section>
+  <p id="hint" class="muted small">Type or paste any Windows error code: hex, decimal or negative. You can also select a code on a web page, right-click it and pick <b>Look up error code</b>.</p>
+</main>
+<footer class="small muted">Offline list from Wine, ReactOS, mingw-w64 and our own notes. <a href="https://techygeekshome.info/browser-extensions/errorgeek/" target="_blank" rel="noopener">About ErrorGeek</a></footer>
+<script src="decode.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

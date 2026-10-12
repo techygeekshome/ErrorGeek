@@ -1,0 +1,36 @@
+ErrorGeek error list (errors.json): where it comes from
+======================================================
+
+errors.json is built by tools/build_db.py from these open source files. No text was taken from
+Microsoft documentation pages.
+
+1. Wine (https://gitlab.winehq.org/wine/wine, mirror https://github.com/wine-mirror/wine)
+   Commit 081042ede6a165a36bf9988350dd584b440d7a3d
+   Files: include/winerror.h, include/ntstatus.h, include/lmerr.h, include/wininet.h, include/winhttp.h,
+          include/setupapi.h, dlls/kernelbase/winerror.mc, dlls/wininet/winineterror.mc
+   Licence: GNU Lesser General Public License, version 2.1 or later. Copyright the Wine project authors
+   (see https://gitlab.winehq.org/wine/wine/-/blob/master/AUTHORS).
+
+2. ReactOS (https://github.com/reactos/reactos)
+   Commit 76a4b7af3e33e524ee8b55c3ac13d531c7447e70
+   Files: sdk/include/reactos/mc/errcodes.mc, sdk/include/reactos/mc/ntstatus.mc,
+          sdk/include/reactos/mc/netmsgmsg.mc, sdk/include/psdk/ntstatus.h
+   Licence: GNU General Public License, version 2 or later (ntstatus.h is public domain).
+   Copyright the ReactOS project authors (see https://github.com/reactos/reactos/blob/master/CREDITS).
+
+3. mingw-w64 (https://github.com/mingw-w64/mingw-w64)
+   Commit 63ebe6cdb3ec4d5c586b7f0f0c03dd502e44c296
+   Files: mingw-w64-headers/include/winerror.h, ntstatus.h, wuerror.h (Windows Update codes)
+   Licence: public domain (no copyright assigned, see DISCLAIMER.PD in that project).
+
+4. ErrorGeek notes, written for ErrorGeek in our own words (GPL-3.0, like the rest of ErrorGeek):
+   - tools/notes.json: short plain English messages for common Windows Update codes that have no
+     message text in any open source header.
+   - tools/extras.json: short descriptions for common Configuration Manager (SCCM), Intune and Windows
+     servicing (CBS) codes that are not in the sources above, and the "How to fix" hints.
+   These are based on general admin experience. They are not copied from Microsoft documentation.
+
+The list holds names, numbers and message texts only. Both LGPL-2.1-or-later and GPL-2.0-or-later
+material can be shared under GPL-3.0, which is the licence of ErrorGeek as a whole.
+Configuration Manager and Intune codes (0x87D0xxxx, 0x87D1xxxx) are not in sources 1 to 3. ErrorGeek
+has its own short notes for the most common ones. For any other, it decodes the parts and links to a search.
