@@ -1,23 +1,74 @@
 {
   "_about": "Written for ErrorGeek in our own words (GPL-3.0). 'codes' fills in common codes that no open source header lists (Configuration Manager, Intune, Windows servicing). 'hints' are short fix tips, keyed by the 8 digit hex form (Win32 codes use their 0x8007xxxx form).",
   "codes": {
-    "87D00213": ["", "Configuration Manager: the operation timed out. For a deployment this often means the install ran longer than its maximum allowed run time."],
-    "87D00215": ["", "Configuration Manager: the item was not found."],
-    "87D00314": ["", "Configuration Manager: timed out getting the version information for a configuration item (the client could not get the policy or content details in time)."],
-    "87D00324": ["", "Configuration Manager: the application installed, but the detection method did not find it afterwards."],
-    "87D00325": ["", "Configuration Manager: the application uninstalled, but the detection method still finds it."],
-    "87D00607": ["", "Configuration Manager: content not found. The client could not get a content location for the package."],
-    "87D00664": ["", "Configuration Manager: the software updates job was cancelled."],
-    "87D00668": ["", "Configuration Manager: the software update is still needed after it was installed."],
-    "87D00669": ["", "Configuration Manager: the client could not get content locations for the software updates at this time."],
-    "87D00692": ["", "Configuration Manager: Group Policy conflict. A local or domain policy is overriding the Windows Update settings the client needs."],
-    "87D01106": ["", "Configuration Manager: could not check the program file or build its command line."],
-    "87D1041C": ["", "Intune: the app installed, but the detection rule did not find it afterwards."],
-    "800F081F": ["CBS_E_SOURCE_MISSING", "Windows servicing: the source files for the feature or package could not be found."],
-    "800F0831": ["CBS_E_STORE_CORRUPTION", "Windows servicing: the component store is missing something the update needs, often an earlier update."],
-    "800F0906": ["CBS_E_DOWNLOAD_FAILURE", "Windows servicing: the source files could not be downloaded."],
-    "800F0907": ["CBS_E_GROUPPOLICY_DISALLOWED", "Windows servicing: Group Policy stopped Windows from downloading the source files."],
-    "800F0922": ["CBS_E_INSTALLERS_FAILED", "Windows servicing: an installer inside the package failed while the update or feature was being applied."]
+    "87D00213": [
+      "",
+      "Configuration Manager: the operation timed out. For a deployment this often means the install ran longer than its maximum allowed run time."
+    ],
+    "87D00215": [
+      "",
+      "Configuration Manager: the item was not found."
+    ],
+    "87D00314": [
+      "",
+      "Configuration Manager: timed out while getting the version information for a configuration item (CI version info timed out)."
+    ],
+    "87D00324": [
+      "",
+      "Configuration Manager: the application installed, but the detection method did not find it afterwards."
+    ],
+    "87D00325": [
+      "",
+      "Configuration Manager: the application uninstalled, but the detection method still finds it."
+    ],
+    "87D00607": [
+      "",
+      "Configuration Manager: content not found. The client could not get a content location for the package."
+    ],
+    "87D00664": [
+      "",
+      "Configuration Manager: the software updates job was cancelled."
+    ],
+    "87D00668": [
+      "",
+      "Configuration Manager: the software update is still needed after it was installed."
+    ],
+    "87D00669": [
+      "",
+      "Configuration Manager: the client could not get content locations for the software updates at this time."
+    ],
+    "87D00692": [
+      "",
+      "Configuration Manager: Group Policy conflict. A local or domain policy is overriding the Windows Update settings the client needs."
+    ],
+    "87D01106": [
+      "",
+      "Configuration Manager: could not check the program file or build its command line."
+    ],
+    "87D1041C": [
+      "",
+      "Intune: the app installed, but the detection rule did not find it afterwards."
+    ],
+    "800F081F": [
+      "CBS_E_SOURCE_MISSING",
+      "Windows servicing: the source files for the feature or package could not be found."
+    ],
+    "800F0831": [
+      "CBS_E_STORE_CORRUPTION",
+      "Windows servicing: the component store is missing something the update needs, often an earlier update."
+    ],
+    "800F0906": [
+      "CBS_E_DOWNLOAD_FAILURE",
+      "Windows servicing: the source files could not be downloaded."
+    ],
+    "800F0907": [
+      "CBS_E_GROUPPOLICY_DISALLOWED",
+      "Windows servicing: Group Policy stopped Windows from downloading the source files."
+    ],
+    "800F0922": [
+      "CBS_E_INSTALLERS_FAILED",
+      "Windows servicing: an installer inside the package failed while the update or feature was being applied."
+    ]
   },
   "hints": {
     "80070005": "Run the tool or command as administrator. Check NTFS, share and registry permissions for the account doing the work. Antivirus or Controlled Folder Access can also block it.",
@@ -36,7 +87,7 @@
     "80070669": "The install worked and the installer has started a restart.",
     "8007052E": "The user name or password is wrong, or the account cannot be used here. Check the account, the domain prefix and any saved credentials.",
     "800706BA": "The remote computer did not answer the RPC call. Check that it is on, that DNS resolves the right address, that the firewall allows RPC and that the service you need is running.",
-    "8007051F": "No domain controller answered. Check DNS settings on the client, network access to a domain controller and the computer's time.",
+    "8007051F": "No domain controller answered. Check the client's DNS servers point at your domain DNS, that it can reach a domain controller, and test with nltest /dsgetdc:yourdomain.",
     "8007054B": "The domain name could not be found. Check that the client uses your internal DNS servers, not a public one.",
     "80070035": "The network path could not be found. Check the name resolves, the share exists, file sharing is on and SMB is allowed through the firewall.",
     "80070043": "The share name does not exist on that server. Check the spelling and that the share is still published.",
@@ -52,23 +103,23 @@
     "80072EFD": "Could not connect to the server. Check the firewall, the proxy and that the server is up on that port.",
     "80072F8F": "A secure (TLS) connection failed. Check the clock and time zone, the root certificates and the TLS versions allowed on both ends.",
     "8024402C": "Check DNS and the WinHTTP proxy (netsh winhttp show proxy). On WSUS clients, check the server name in the WUServer policy is correct.",
-    "80244022": "On WSUS, the WsusPool application pool in IIS has usually stopped. Start it, and if it keeps stopping, raise its Private Memory Limit.",
+    "80244022": "The update server returned 503. On WSUS, the WsusPool application pool in IIS has usually stopped: start it, and if it keeps stopping, raise its Private Memory Limit. Otherwise check the proxy lets the client through without a login.",
     "80244019": "The update server returned 404. Check the WSUS address and port in policy, and that the WSUS content folder and virtual directories are intact.",
     "80244017": "The proxy or server wants a login the update agent cannot give. Allow the update URLs through the proxy without authentication.",
     "80244018": "The proxy or server refused the request. Allow the Windows Update or WSUS URLs through the proxy and firewall.",
     "8024401C": "The update server took too long to answer. Check the server load, the WSUS database and the network path.",
     "80240438": "The update service could not be reached. Check internet access, the proxy and policies that block Windows Update.",
     "8024002E": "A policy blocks the client from going to Windows Update directly. Check \"Do not connect to any Windows Update Internet locations\" and the WSUS settings.",
-    "80240022": "Every update in the batch failed. Look at the result code of each update in WindowsUpdate.log (Get-WindowsUpdateLog) to find the real cause.",
+    "80240022": "Every update in the batch failed. Look at the result code of each update in WindowsUpdate.log (Get-WindowsUpdateLog) or CBS.log to find the real cause. Antivirus locking the SoftwareDistribution folder is a common one.",
     "80240017": "The update does not apply to this device: wrong edition, wrong architecture, a missing prerequisite or it is already installed.",
-    "800F081F": "Point Windows at a source: DISM /Online /Enable-Feature with /Source:wim:path\\install.wim:1 /LimitAccess using media that matches the build. Or set the \"Specify settings for optional component installation\" policy so it can use Windows Update.",
+    "800F081F": "Point Windows at a source that matches the build, for example DISM /Online /Enable-Feature /FeatureName:NetFx3 /All /Source:D:\\sources\\sxs /LimitAccess (or /Source:wim:D:\\sources\\install.wim:1 for other features). Or set the \"Specify settings for optional component installation and component repair\" policy so it can use Windows Update.",
     "800F0831": "Install the missing earlier update (the CBS.log names it), or run DISM /Online /Cleanup-Image /RestoreHealth, then retry.",
     "800F0906": "Check internet access, or use local media with /Source. On WSUS clients, allow optional component downloads from Windows Update in policy.",
     "800F0907": "Set the \"Specify settings for optional component installation and component repair\" policy so the device may download from Windows Update, or use a local /Source.",
-    "800F0922": "Check CBS.log for the failing step. Common causes: a full System Reserved or EFI partition, a VPN or proxy blocking the download, or a stuck .NET Framework install.",
+    "800F0922": "Check CBS.log for the failing step. Common causes: a VPN or proxy blocking the connection to Windows Update, or too little free space on the System Reserved or EFI partition. For .NET Framework 3.5, install from local media with DISM /Source.",
     "800F0954": "Often seen when installing optional features (such as .NET 3.5 or RSAT) on a WSUS client. Let the device use Windows Update for optional features in policy, or install from local media.",
     "C0000005": "The program read or wrote memory it should not. Update or reinstall the program and its drivers, then check the Application event log for the faulting module.",
-    "C000006D": "The sign-in failed. Check the user name, domain and password, and that the clocks on client and server match.",
+    "C000006D": "The sign-in failed because the user name or password was wrong. On the target computer, event 4625 in the Security log gives a sub-status code that names the exact reason.",
     "C000006A": "The password was wrong. Reset it, then update any saved credentials, services and mapped drives that still use the old one.",
     "C0000234": "The account is locked out. Unlock it, then use the lockout source (event 4740 on a domain controller) to find what keeps sending the old password.",
     "C0000072": "The account is disabled. Enable it in Active Directory or Computer Management.",
@@ -88,6 +139,6 @@
     "87D00669": "Check the update package is distributed to a distribution point in the client's boundary group, and that the deployment allows a fallback source if needed. Check LocationServices.log.",
     "87D00692": "Check WUAHandler.log, then run gpresult /h to find the GPO that sets the WSUS server or Windows Update settings and conflicts with the ConfigMgr client.",
     "87D01106": "Check the program command line, that the file exists in the content and that the deployment type points at the right file. AppEnforce.log shows the full command it tried.",
-    "87D1041C": "Check the app's detection rule matches what the installer really writes (path, version, registry key or MSI product code), including 32 or 64 bit locations. The IntuneManagementExtension.log shows the result."
+    "87D1041C": "Check the app's detection rule matches what the installer really writes (path, version, registry key or MSI product code), including 32 or 64 bit locations. AppWorkload.log (IntuneManagementExtension.log on older agents) shows the detection result."
   }
 }
